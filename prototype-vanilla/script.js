@@ -1,0 +1,348 @@
+/* =========================================================
+   프로젝트 데이터
+   - 이 배열만 수정하면 타임라인이 자동으로 다시 그려집니다.
+   - date: "YYYY-MM" 형식 (정렬과 연도 구분에 사용)
+   - company: 소속 회사·조직 (개인 작업이면 "개인 프로젝트" 등, 비워도 됨)
+   - hue: 썸네일 자리 표시 색상 (0~360). 실제 이미지가 생기면 image 필드를 추가하세요.
+   ========================================================= */
+const projects = [
+  {
+    id: "dashboard",
+    date: "2026-09",
+    title: "사내 데이터 대시보드 구축",
+    summary: "흩어진 운영 지표를 한 화면에 모은 실시간 대시보드",
+    company: "㈜샘플데이터 · 플랫폼개발팀",
+    category: "Web App",
+    role: "프론트엔드 리드 (기여도 70%)",
+    period: "2026.06 – 2026.09 · 4개월",
+    stack: ["React", "TypeScript", "D3.js"],
+    hue: 220,
+    problem: "운영팀이 매일 아침 5개의 서로 다른 시스템에서 지표를 수작업으로 모아 보고하고 있었습니다.",
+    process: [
+      "운영팀 인터뷰로 실제로 매일 보는 지표 12개를 선별",
+      "D3 기반 차트 컴포넌트를 공통 모듈로 설계",
+      "WebSocket으로 5초 간격 실시간 갱신 구현",
+    ],
+    result: "아침 보고 준비 시간을 평균 40분에서 5분으로 줄였습니다.",
+    links: [{ label: "회고 글", href: "#" }],
+  },
+  {
+    id: "booking",
+    date: "2026-03",
+    title: "모바일 예약 앱 리디자인",
+    summary: "이탈률이 높던 예약 플로우를 3단계로 단순화",
+    company: "㈜예약해요 · 프로덕트팀",
+    category: "Mobile · UX",
+    role: "UI 설계 및 프론트엔드 개발",
+    period: "2026.01 – 2026.03 · 3개월",
+    stack: ["Figma", "React Native"],
+    hue: 18,
+    problem: "예약 완료까지 7단계를 거쳐야 했고, 결제 직전 단계 이탈률이 48%에 달했습니다.",
+    process: [
+      "퍼널 데이터 분석으로 이탈 구간 3곳 도출",
+      "날짜·인원 선택을 한 화면으로 통합한 프로토타입 제작",
+      "사용성 테스트 8회 진행 후 반복 개선",
+    ],
+    result: "예약 완료율이 21%p 상승했습니다.",
+    links: [{ label: "Figma 프로토타입", href: "#" }],
+  },
+  {
+    id: "design-system",
+    date: "2025-11",
+    title: "디자인 시스템 ‘Mono’ 구축",
+    summary: "3개 서비스가 함께 쓰는 컴포넌트 라이브러리",
+    company: "㈜예약해요 · 디자인시스템 TF",
+    category: "Design System",
+    role: "컴포넌트 설계 · 문서화",
+    period: "2025.07 – 2025.11 · 5개월",
+    stack: ["React", "Storybook", "CSS Variables"],
+    hue: 150,
+    problem: "서비스마다 버튼과 입력창 스타일이 달라 디자인 QA에 많은 시간이 들었습니다.",
+    process: [
+      "기존 화면 120개를 수집해 컴포넌트 인벤토리 작성",
+      "색·간격·타이포를 디자인 토큰으로 정의",
+      "Storybook으로 사용 예시와 접근성 체크리스트 문서화",
+    ],
+    result: "신규 화면 개발 기간이 평균 30% 단축되었습니다.",
+    links: [{ label: "Storybook", href: "#" }, { label: "GitHub", href: "#" }],
+  },
+  {
+    id: "a11y",
+    date: "2025-05",
+    title: "공공 웹사이트 접근성 개선",
+    summary: "스크린 리더 사용자를 위한 전면 마크업 개선",
+    company: "스튜디오 오픈웹 (에이전시)",
+    category: "Accessibility",
+    role: "퍼블리싱 · 접근성 검수",
+    period: "2025.03 – 2025.05 · 3개월",
+    stack: ["HTML", "ARIA", "WCAG 2.2"],
+    hue: 270,
+    problem: "웹 접근성 인증 심사에서 34개 항목이 부적합 판정을 받았습니다.",
+    process: [
+      "자동 검사 도구와 수동 스크린 리더 테스트 병행",
+      "시맨틱 마크업과 키보드 포커스 흐름 재설계",
+      "팀 내부용 접근성 체크리스트 작성",
+    ],
+    result: "재심사에서 전 항목 적합 판정을 받아 인증을 획득했습니다.",
+    links: [],
+  },
+  {
+    id: "blog",
+    date: "2024-10",
+    title: "개인 블로그 엔진 제작",
+    summary: "마크다운 기반 정적 블로그를 직접 만들어 운영",
+    company: "개인 프로젝트",
+    category: "Side Project",
+    role: "1인 개발",
+    period: "2024.08 – 2024.10 · 3개월",
+    stack: ["Next.js", "MDX", "Vercel"],
+    hue: 40,
+    problem: "기존 블로그 플랫폼은 코드 하이라이팅과 커스텀 컴포넌트 삽입이 불편했습니다.",
+    process: [
+      "MDX로 글 안에 인터랙티브 컴포넌트 삽입 지원",
+      "빌드 시 OG 이미지 자동 생성",
+      "Lighthouse 성능 점수 98점 달성",
+    ],
+    result: "현재까지 글 40편을 발행했고 월 방문자 3천 명을 유지하고 있습니다.",
+    links: [{ label: "블로그 방문", href: "#" }, { label: "GitHub", href: "#" }],
+  },
+  {
+    id: "capstone",
+    date: "2024-06",
+    title: "졸업 프로젝트 · 캠퍼스 분실물 플랫폼",
+    summary: "사진 인식으로 분실물을 자동 분류하는 웹 서비스",
+    company: "한빛대학교 컴퓨터공학과",
+    category: "Team Project",
+    role: "팀장 · 프론트엔드",
+    period: "2024.03 – 2024.06 · 4개월",
+    stack: ["Vue", "Firebase", "TensorFlow.js"],
+    hue: 190,
+    problem: "학과 사무실마다 분실물을 따로 보관해 주인을 찾기 어려웠습니다.",
+    process: [
+      "4인 팀의 일정·역할 관리와 주간 스프린트 운영",
+      "업로드한 사진을 브라우저에서 바로 분류하는 기능 구현",
+      "실제 학과 사무실 2곳에서 한 달간 시범 운영",
+    ],
+    result: "졸업 작품 전시에서 우수상을 받았습니다.",
+    links: [{ label: "발표 자료", href: "#" }],
+  },
+  {
+    id: "first-site",
+    date: "2024-02",
+    title: "첫 반응형 웹사이트 · 동네 카페 소개",
+    summary: "HTML과 CSS만으로 만든 첫 외주 작업",
+    company: "프리랜서",
+    category: "Freelance",
+    role: "기획 · 디자인 · 개발",
+    period: "2024.01 – 2024.02 · 6주",
+    stack: ["HTML", "CSS"],
+    hue: 30,
+    problem: "카페 사장님이 메뉴와 영업시간을 SNS에만 올려 검색으로 찾기 어려웠습니다.",
+    process: [
+      "모바일 방문자가 90%라는 점을 고려해 모바일 우선으로 설계",
+      "메뉴판을 사장님이 직접 수정할 수 있도록 단순한 구조로 작성",
+    ],
+    result: "지도 검색 유입이 생겨 주말 신규 방문객이 늘었다는 피드백을 받았습니다.",
+    links: [],
+  },
+];
+
+/* =========================================================
+   상태 & DOM
+   ========================================================= */
+const state = { order: "desc" };
+
+const $timeline = document.getElementById("timeline");
+const $yearNav = document.getElementById("year-nav");
+const $yearNavWrap = document.querySelector(".year-nav");
+const $expandAll = document.getElementById("expand-all");
+const $orderButtons = document.querySelectorAll("[data-order]");
+
+// 번호는 오래된 프로젝트부터 01, 02 … 로 고정 (정렬을 바꿔도 유지)
+const numbered = [...projects]
+  .sort((a, b) => a.date.localeCompare(b.date))
+  .map((p, i) => ({ ...p, no: String(i + 1).padStart(2, "0") }));
+
+const formatDate = (d) => d.replace("-", ".");
+
+/* =========================================================
+   렌더링
+   ========================================================= */
+function entryHTML(p) {
+  const bodyId = `body-${p.id}`;
+  const links = p.links.length
+    ? `<div><dt>Links</dt><dd>${p.links
+        .map((l) => `<a href="${l.href}">${l.label}</a>`)
+        .join(" · ")}</dd></div>`
+    : "";
+
+  return `
+  <li class="entry" data-id="${p.id}">
+    <button class="entry-head" type="button" aria-expanded="false" aria-controls="${bodyId}">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="entry-main">
+        <span class="entry-meta">No.${p.no} · ${formatDate(p.date)} · ${p.category}</span>
+        <span class="entry-title">${p.title}</span>
+        <span class="entry-summary">${p.summary}</span>
+      </span>
+      <span class="tags">${p.stack.map((s) => `<span class="tag">${s}</span>`).join("")}</span>
+      <span class="toggle" aria-hidden="true"></span>
+    </button>
+
+    <div class="entry-body" id="${bodyId}" role="region" aria-label="${p.title} 상세">
+      <div class="inner">
+        <div class="detail">
+          <dl class="detail-meta">
+            ${p.company ? `<div><dt>Company</dt><dd>${p.company}</dd></div>` : ""}
+            <div><dt>Role</dt><dd>${p.role}</dd></div>
+            <div><dt>Period</dt><dd>${p.period}</dd></div>
+            <div><dt>Stack</dt><dd>${p.stack.join(", ")}</dd></div>
+            ${links}
+          </dl>
+
+          <div class="detail-content">
+            <figure class="thumb" style="--h:${p.hue}">
+              <span>IMAGE · ${p.title}</span>
+            </figure>
+            <section class="detail-section">
+              <h4>01 — 문제</h4>
+              <p>${p.problem}</p>
+            </section>
+            <section class="detail-section">
+              <h4>02 — 과정</h4>
+              <ul>${p.process.map((s) => `<li>${s}</li>`).join("")}</ul>
+            </section>
+            <section class="detail-section">
+              <h4>03 — 결과</h4>
+              <p>${p.result}</p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>`;
+}
+
+function render() {
+  const sorted = [...numbered].sort((a, b) =>
+    state.order === "desc" ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)
+  );
+
+  // 연도별 그룹 (Map은 삽입 순서를 유지하므로 정렬 순서가 그대로 반영됨)
+  const groups = new Map();
+  for (const p of sorted) {
+    const year = p.date.slice(0, 4);
+    if (!groups.has(year)) groups.set(year, []);
+    groups.get(year).push(p);
+  }
+
+  $timeline.innerHTML = [...groups]
+    .map(
+      ([year, items]) => `
+      <section class="year" id="y${year}" data-year="${year}">
+        <header class="year-head">
+          <h3 class="year-label">${year}</h3>
+          <p class="year-count">${items.length} project${items.length > 1 ? "s" : ""}</p>
+        </header>
+        <ol class="entries">${items.map(entryHTML).join("")}</ol>
+      </section>`
+    )
+    .join("");
+
+  $yearNav.innerHTML = [...groups.keys()]
+    .map((y) => `<li><a href="#y${y}" data-year="${y}">${y}</a></li>`)
+    .join("");
+
+  updateExpandAllLabel();
+  observeYears();
+}
+
+/* =========================================================
+   펼치기 / 접기
+   ========================================================= */
+function setOpen(entry, open) {
+  entry.classList.toggle("open", open);
+  entry.querySelector(".entry-head").setAttribute("aria-expanded", String(open));
+}
+
+$timeline.addEventListener("click", (e) => {
+  const head = e.target.closest(".entry-head");
+  if (!head) return;
+  const entry = head.closest(".entry");
+  setOpen(entry, !entry.classList.contains("open"));
+  updateExpandAllLabel();
+});
+
+function allOpen() {
+  const entries = $timeline.querySelectorAll(".entry");
+  return entries.length > 0 && [...entries].every((el) => el.classList.contains("open"));
+}
+
+function updateExpandAllLabel() {
+  $expandAll.textContent = allOpen() ? "모두 접기" : "모두 펼치기";
+}
+
+$expandAll.addEventListener("click", () => {
+  const open = !allOpen();
+  $timeline.querySelectorAll(".entry").forEach((el) => setOpen(el, open));
+  updateExpandAllLabel();
+});
+
+/* =========================================================
+   정렬 전환
+   ========================================================= */
+$orderButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (state.order === btn.dataset.order) return;
+    state.order = btn.dataset.order;
+    $orderButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+
+    // 열려 있던 항목은 정렬 후에도 열린 상태 유지
+    const openIds = [...$timeline.querySelectorAll(".entry.open")].map((el) => el.dataset.id);
+    render();
+    openIds.forEach((id) => {
+      const el = $timeline.querySelector(`.entry[data-id="${id}"]`);
+      if (el) setOpen(el, true);
+    });
+    updateExpandAllLabel();
+  });
+});
+
+/* =========================================================
+   연도 내비게이션: 현재 보고 있는 연도 강조
+   ========================================================= */
+let yearObserver;
+
+function observeYears() {
+  yearObserver?.disconnect();
+  yearObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const year = entry.target.dataset.year;
+        $yearNav.querySelectorAll("a").forEach((a) =>
+          a.classList.toggle("active", a.dataset.year === year)
+        );
+      });
+    },
+    { rootMargin: "-45% 0px -50% 0px" }
+  );
+  $timeline.querySelectorAll(".year").forEach((sec) => yearObserver.observe(sec));
+}
+
+// Works 영역에 들어왔을 때만 연도 내비게이션 표시
+new IntersectionObserver(
+  ([entry]) => $yearNavWrap.classList.toggle("visible", entry.isIntersecting),
+  { rootMargin: "-30% 0px -30% 0px" }
+).observe(document.getElementById("works"));
+
+/* =========================================================
+   인트로 통계
+   ========================================================= */
+const years = [...new Set(projects.map((p) => p.date.slice(0, 4)))].sort();
+document.getElementById("range").textContent = `${years[0]}–${years[years.length - 1]}`;
+document.getElementById("stat-count").textContent = projects.length;
+document.getElementById("stat-years").textContent = years.length;
+document.getElementById("year-now").textContent = new Date().getFullYear();
+
+render();
